@@ -1,5 +1,5 @@
 # gomall
-一个基于 `docker` 的 `go-zero` 本地开发运行环境。
+一个基于 `docker` 和 `go-zero` 的微服务项目
 
 
 ## 使用
