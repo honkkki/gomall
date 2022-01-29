@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/honkkki/gomall/code/mall/service/user/rpc/userclient"
 
 	"github.com/honkkki/gomall/code/mall/service/user/api/internal/svc"
 	"github.com/honkkki/gomall/code/mall/service/user/api/internal/types"
@@ -24,7 +25,21 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) RegisterL
 }
 
 func (l *RegisterLogic) Register(req types.RegisterRequest) (resp *types.RegisterResponse, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.UserRpc.Register(l.ctx, &userclient.RegisterRequest{
+		Name:     req.Name,
+		Gender:   req.Gender,
+		Mobile:   req.Mobile,
+		Password: req.Password,
+	})
 
-	return
+	if err != nil {
+		return nil, err
+	}
+
+	return &types.RegisterResponse{
+		Id:     res.Id,
+		Name:   res.Name,
+		Gender: res.Gender,
+		Mobile: res.Mobile,
+	}, nil
 }
