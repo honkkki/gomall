@@ -10,7 +10,8 @@ type CreateRequest struct {
 }
 
 type CreateResponse struct {
-	Id int64 `json:"id"`
+	Id   int64  `json:"id"`
+	Name string `json:"name"`
 }
 
 type UpdateRequest struct {

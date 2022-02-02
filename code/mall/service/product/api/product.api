@@ -8,7 +8,8 @@ type (
 		Status int64   `json:"status"`
 	}
 	CreateResponse {
-		Id int64 `json:"id"`
+		Id   int64  `json:"id"`
+		Name string `json:"name"`
 	}
 	// 产品创建
 

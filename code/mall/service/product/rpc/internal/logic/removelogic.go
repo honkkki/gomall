@@ -24,7 +24,6 @@ func NewRemoveLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RemoveLogi
 }
 
 func (l *RemoveLogic) Remove(in *product.RemoveRequest) (*product.RemoveResponse, error) {
-	// todo: add your logic here and delete this line
 
 	return &product.RemoveResponse{}, nil
 }

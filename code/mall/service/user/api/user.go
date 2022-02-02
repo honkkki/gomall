@@ -3,6 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/honkkki/gomall/code/mall/common/errorx"
+	"github.com/tal-tech/go-zero/rest/httpx"
+	"net/http"
 
 	"github.com/honkkki/gomall/code/mall/service/user/api/internal/config"
 	"github.com/honkkki/gomall/code/mall/service/user/api/internal/handler"
@@ -25,6 +28,19 @@ func main() {
 	defer server.Stop()
 
 	handler.RegisterHandlers(server, ctx)
+	httpx.SetErrorHandler(func(err error) (int, interface{}) {
+		switch e := err.(type) {
+		case errorx.CodeError:
+			return http.StatusOK, e.Data()
+		default:
+			exi := errorx.NewCodeError(errorx.InternalError, e.Error())
+			ex, ok := exi.(errorx.CodeError)
+			if !ok {
+				return http.StatusInternalServerError, e.Error()
+			}
+			return http.StatusOK, ex.Data()
+		}
+	})
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()

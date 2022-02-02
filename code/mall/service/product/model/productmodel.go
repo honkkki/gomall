@@ -28,6 +28,7 @@ type (
 		FindOne(id int64) (*Product, error)
 		Update(data *Product) error
 		Delete(id int64) error
+		GetAll(offset, limit int64) ([]Product, error)
 	}
 
 	defaultProductModel struct {
@@ -41,7 +42,7 @@ type (
 		Desc       string    `db:"desc"`   // 产品描述
 		Stock      int64     `db:"stock"`  // 产品库存
 		Amount     float64   `db:"amount"` // 产品金额
-		Status     int64     `db:"status"` // 产品状态
+		Status     int64     `db:"status"` // 产品状态 -1已删除
 		CreateTime time.Time `db:"create_time"`
 		UpdateTime time.Time `db:"update_time"`
 	}
@@ -59,6 +60,17 @@ func (m *defaultProductModel) Insert(data *Product) (sql.Result, error) {
 	ret, err := m.ExecNoCache(query, data.Name, data.Desc, data.Stock, data.Amount, data.Status)
 
 	return ret, err
+}
+
+func (m *defaultProductModel) GetAll(offset, limit int64) ([]Product, error) {
+	var res []Product
+	query := fmt.Sprintf("select * from %s limit %d,%d", m.table, offset, limit)
+	err := m.QueryRowsNoCache(&res, query)
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
 }
 
 func (m *defaultProductModel) FindOne(id int64) (*Product, error) {

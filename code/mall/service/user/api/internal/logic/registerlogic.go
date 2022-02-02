@@ -2,7 +2,9 @@ package logic
 
 import (
 	"context"
+	"github.com/honkkki/gomall/code/mall/common/errorx"
 	"github.com/honkkki/gomall/code/mall/service/user/rpc/userclient"
+	"strings"
 
 	"github.com/honkkki/gomall/code/mall/service/user/api/internal/svc"
 	"github.com/honkkki/gomall/code/mall/service/user/api/internal/types"
@@ -25,6 +27,10 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) RegisterL
 }
 
 func (l *RegisterLogic) Register(req types.RegisterRequest) (resp *types.RegisterResponse, err error) {
+	if len(strings.TrimSpace(req.Name)) == 0 || len(strings.TrimSpace(req.Password)) == 0 || len(strings.TrimSpace(req.Mobile)) == 0 {
+		return nil, errorx.NewDefaultError("参数错误")
+	}
+
 	res, err := l.svcCtx.UserRpc.Register(l.ctx, &userclient.RegisterRequest{
 		Name:     req.Name,
 		Gender:   req.Gender,
@@ -33,7 +39,7 @@ func (l *RegisterLogic) Register(req types.RegisterRequest) (resp *types.Registe
 	})
 
 	if err != nil {
-		return nil, err
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 
 	return &types.RegisterResponse{
