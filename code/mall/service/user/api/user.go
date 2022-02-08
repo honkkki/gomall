@@ -31,14 +31,14 @@ func main() {
 	httpx.SetErrorHandler(func(err error) (int, interface{}) {
 		switch e := err.(type) {
 		case errorx.CodeError:
-			return http.StatusOK, e.Data()
+			return http.StatusOK, e.Response()
 		default:
 			exi := errorx.NewCodeError(errorx.InternalError, e.Error())
 			ex, ok := exi.(errorx.CodeError)
 			if !ok {
 				return http.StatusInternalServerError, e.Error()
 			}
-			return http.StatusOK, ex.Data()
+			return http.StatusOK, ex.Response()
 		}
 	})
 

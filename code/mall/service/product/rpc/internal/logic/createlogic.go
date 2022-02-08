@@ -5,9 +5,8 @@ import (
 	"github.com/honkkki/gomall/code/mall/service/product/model"
 	"github.com/honkkki/gomall/code/mall/service/product/rpc/internal/svc"
 	"github.com/honkkki/gomall/code/mall/service/product/rpc/product"
-	"google.golang.org/grpc/status"
-
 	"github.com/tal-tech/go-zero/core/logx"
+	"google.golang.org/grpc/status"
 )
 
 type CreateLogic struct {
@@ -25,6 +24,17 @@ func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogi
 }
 
 func (l *CreateLogic) Create(in *product.CreateRequest) (*product.CreateResponse, error) {
+	var num int64
+	err := l.svcCtx.DBEngine.Model(&model.Product{}).Where("name=?", in.Name).Count(&num).Error
+
+	if err != nil {
+		return nil, status.Error(500, err.Error())
+	}
+
+	if num > 0 {
+		return nil, status.Error(100, "product has existed.")
+	}
+
 	newProduct := model.Product{
 		Name:   in.Name,
 		Desc:   in.Desc,

@@ -16,10 +16,10 @@ type (
 	// 产品修改
 	UpdateRequest {
 		Id     int64   `json:"id"`
-		Name   string  `json:"name,optional"`
-		Desc   string  `json:"desc,optional"`
+		Name   string  `json:"name"`
+		Desc   string  `json:"desc"`
 		Stock  int64   `json:"stock"`
-		Amount float64 `json:"amount,optional"`
+		Amount float64 `json:"amount"`
 		Status int64   `json:"status,optional"`
 	}
 	UpdateResponse {
@@ -49,9 +49,6 @@ type (
 	// 产品详情
 )
 
-@server(
-	jwt: Auth
-)
 service Product {
 	@handler Create
 	post /api/product/create(CreateRequest) returns (CreateResponse)

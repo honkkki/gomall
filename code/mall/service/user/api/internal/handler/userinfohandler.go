@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/honkkki/gomall/code/mall/common/retdata"
 	"net/http"
 
 	"github.com/honkkki/gomall/code/mall/service/user/api/internal/logic"
@@ -15,7 +16,7 @@ func UserInfoHandler(ctx *svc.ServiceContext) http.HandlerFunc {
 		if err != nil {
 			httpx.Error(w, err)
 		} else {
-			httpx.OkJson(w, resp)
+			httpx.OkJson(w, retdata.NewSuccessRet(resp))
 		}
 	}
 }

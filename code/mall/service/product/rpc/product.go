@@ -36,5 +36,6 @@ func main() {
 	defer s.Stop()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
+	fmt.Println("CpuThreshold:", c.RpcServerConf.CpuThreshold)
 	s.Start()
 }

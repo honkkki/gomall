@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/honkkki/gomall/code/mall/common/errorx"
+	"github.com/honkkki/gomall/code/mall/service/product/rpc/productclient"
 
 	"github.com/honkkki/gomall/code/mall/service/product/api/internal/svc"
 	"github.com/honkkki/gomall/code/mall/service/product/api/internal/types"
@@ -24,7 +26,22 @@ func NewUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) UpdateLogic
 }
 
 func (l *UpdateLogic) Update(req types.UpdateRequest) (resp *types.UpdateResponse, err error) {
-	// todo: add your logic here and delete this line
+	if len(req.Name) == 0 || len(req.Desc) == 0 || req.Amount == 0 {
+		return nil, errorx.NewDefaultError("params error.")
+	}
 
-	return
+	_, err = l.svcCtx.ProductRpc.Update(l.ctx, &productclient.UpdateRequest{
+		Id:     req.Id,
+		Name:   req.Name,
+		Desc:   req.Desc,
+		Amount: req.Amount,
+		Stock:  req.Stock,
+		Status: req.Status,
+	})
+
+	if err != nil {
+		return nil, errorx.NewDefaultError(err.Error())
+	}
+
+	return &types.UpdateResponse{}, nil
 }

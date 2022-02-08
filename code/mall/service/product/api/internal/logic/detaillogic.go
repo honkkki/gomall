@@ -2,9 +2,10 @@ package logic
 
 import (
 	"context"
-
+	"github.com/honkkki/gomall/code/mall/common/errorx"
 	"github.com/honkkki/gomall/code/mall/service/product/api/internal/svc"
 	"github.com/honkkki/gomall/code/mall/service/product/api/internal/types"
+	"github.com/honkkki/gomall/code/mall/service/product/rpc/productclient"
 
 	"github.com/tal-tech/go-zero/core/logx"
 )
@@ -24,7 +25,20 @@ func NewDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) DetailLogic
 }
 
 func (l *DetailLogic) Detail(req types.DetailRequest) (resp *types.DetailResponse, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.ProductRpc.Detail(l.ctx, &productclient.DetailRequest{
+		Id: req.Id,
+	})
 
-	return
+	if err != nil {
+		return nil, errorx.NewDefaultError(err.Error())
+	}
+
+	return &types.DetailResponse{
+		Id:     res.Id,
+		Name:   res.Name,
+		Desc:   res.Desc,
+		Stock:  res.Stock,
+		Amount: res.Amount,
+		Status: res.Status,
+	}, nil
 }

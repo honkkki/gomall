@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/honkkki/gomall/code/mall/common/errorx"
+	"github.com/honkkki/gomall/code/mall/service/product/rpc/productclient"
 
 	"github.com/honkkki/gomall/code/mall/service/product/api/internal/svc"
 	"github.com/honkkki/gomall/code/mall/service/product/api/internal/types"
@@ -24,7 +26,13 @@ func NewRemoveLogic(ctx context.Context, svcCtx *svc.ServiceContext) RemoveLogic
 }
 
 func (l *RemoveLogic) Remove(req types.RemoveRequest) (resp *types.RemoveResponse, err error) {
-	// todo: add your logic here and delete this line
+	_, err = l.svcCtx.ProductRpc.Remove(l.ctx, &productclient.RemoveRequest{
+		Id: req.Id,
+	})
 
-	return
+	if err != nil {
+		return nil, errorx.NewDefaultError(err.Error())
+	}
+
+	return &types.RemoveResponse{}, nil
 }

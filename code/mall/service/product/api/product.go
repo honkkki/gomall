@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-
+	"github.com/honkkki/gomall/code/mall/common/errorx"
 	"github.com/honkkki/gomall/code/mall/service/product/api/internal/config"
 	"github.com/honkkki/gomall/code/mall/service/product/api/internal/handler"
 	"github.com/honkkki/gomall/code/mall/service/product/api/internal/svc"
+	"github.com/tal-tech/go-zero/rest/httpx"
 
 	"github.com/tal-tech/go-zero/core/conf"
 	"github.com/tal-tech/go-zero/rest"
@@ -25,6 +26,8 @@ func main() {
 	defer server.Stop()
 
 	handler.RegisterHandlers(server, ctx)
+
+	httpx.SetErrorHandler(errorx.ErrorHandler())
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
