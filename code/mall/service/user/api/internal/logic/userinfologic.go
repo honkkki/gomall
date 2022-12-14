@@ -2,13 +2,11 @@ package logic
 
 import (
 	"context"
-	"encoding/json"
-	"github.com/honkkki/gomall/code/mall/service/user/rpc/userclient"
 
 	"github.com/honkkki/gomall/code/mall/service/user/api/internal/svc"
 	"github.com/honkkki/gomall/code/mall/service/user/api/internal/types"
 
-	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type UserInfoLogic struct {
@@ -17,8 +15,8 @@ type UserInfoLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
-func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) UserInfoLogic {
-	return UserInfoLogic{
+func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfoLogic {
+	return &UserInfoLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
@@ -26,19 +24,7 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) UserInfoL
 }
 
 func (l *UserInfoLogic) UserInfo() (resp *types.UserInfoResponse, err error) {
-	uid, _ := l.ctx.Value("uid").(json.Number).Int64()
-	res, err := l.svcCtx.UserRpc.UserInfo(l.ctx, &userclient.UserInfoRequest{
-		Id: uid,
-	})
+	// todo: add your logic here and delete this line
 
-	if err != nil {
-		return nil, err
-	}
-
-	return &types.UserInfoResponse{
-		Id:     res.Id,
-		Name:   res.Name,
-		Gender: res.Gender,
-		Mobile: res.Mobile,
-	}, nil
+	return
 }

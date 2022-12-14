@@ -2,13 +2,11 @@ package logic
 
 import (
 	"context"
-	"github.com/honkkki/gomall/code/mall/service/user/model"
-	"google.golang.org/grpc/status"
 
 	"github.com/honkkki/gomall/code/mall/service/user/rpc/internal/svc"
-	"github.com/honkkki/gomall/code/mall/service/user/rpc/user"
+	"github.com/honkkki/gomall/code/mall/service/user/rpc/types/user"
 
-	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type UserInfoLogic struct {
@@ -26,18 +24,7 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 }
 
 func (l *UserInfoLogic) UserInfo(in *user.UserInfoRequest) (*user.UserInfoResponse, error) {
-	res, err := l.svcCtx.UserModel.FindOne(in.Id)
-	if err != nil {
-		if err == model.ErrNotFound {
-			return nil, status.Error(100, "user not found.")
-		}
-		return nil, status.Error(500, err.Error())
-	}
+	// todo: add your logic here and delete this line
 
-	return &user.UserInfoResponse{
-		Id:     res.Id,
-		Name:   res.Name,
-		Gender: res.Gender,
-		Mobile: res.Mobile,
-	}, nil
+	return &user.UserInfoResponse{}, nil
 }

@@ -3,7 +3,7 @@ package svc
 import (
 	"github.com/honkkki/gomall/code/mall/service/user/model"
 	"github.com/honkkki/gomall/code/mall/service/user/rpc/internal/config"
-	"github.com/tal-tech/go-zero/core/stores/sqlx"
+	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
 type ServiceContext struct {
@@ -15,6 +15,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	conn := sqlx.NewMysql(c.Mysql.DataSource)
 	return &ServiceContext{
 		Config:    c,
-		UserModel: model.NewUserModel(conn, c.CacheRedis),
+		UserModel: model.NewUserModel(conn, c.RedisCache),
 	}
 }

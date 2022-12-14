@@ -1,6 +1,4 @@
-FROM golang:1.17
-
-LABEL maintainer="Ving <ving@nivin.cn>"
+FROM golang:1.18
 
 ENV GOPROXY https://goproxy.cn,direct
 

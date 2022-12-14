@@ -2,14 +2,15 @@ package logic
 
 import (
 	"context"
+	"errors"
 	"github.com/honkkki/gomall/code/mall/common/encryption"
 	"github.com/honkkki/gomall/code/mall/service/user/model"
 	"google.golang.org/grpc/status"
 
 	"github.com/honkkki/gomall/code/mall/service/user/rpc/internal/svc"
-	"github.com/honkkki/gomall/code/mall/service/user/rpc/user"
+	"github.com/honkkki/gomall/code/mall/service/user/rpc/types/user"
 
-	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type RegisterLogic struct {
@@ -26,14 +27,13 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 	}
 }
 
-// Register 用户注册的具体逻辑
 func (l *RegisterLogic) Register(in *user.RegisterRequest) (*user.RegisterResponse, error) {
-	_, err := l.svcCtx.UserModel.FindOneByMobile(in.Mobile)
+	_, err := l.svcCtx.UserModel.FindOneByMobile(l.ctx, in.Mobile)
 	if err == nil {
-		return nil, status.Error(100, "user mobile has been used.")
+		return nil, status.Error(100, "用户已存在")
 	}
 
-	if err == model.ErrNotFound {
+	if errors.Is(err, model.ErrNotFound) {
 		newUser := model.User{
 			Name:     in.Name,
 			Gender:   in.Gender,
@@ -41,16 +41,18 @@ func (l *RegisterLogic) Register(in *user.RegisterRequest) (*user.RegisterRespon
 			Password: encryption.PasswordEncrypt(l.svcCtx.Config.Salt, in.Password),
 		}
 
-		res, err := l.svcCtx.UserModel.Insert(&newUser)
+		res, err := l.svcCtx.UserModel.Insert(l.ctx, &newUser)
 		if err != nil {
 			return nil, status.Error(500, err.Error())
 		}
-		id, err := res.LastInsertId()
+
+		newUser.Id, err = res.LastInsertId()
 		if err != nil {
 			return nil, status.Error(500, err.Error())
 		}
+
 		return &user.RegisterResponse{
-			Id:     id,
+			Id:     newUser.Id,
 			Name:   newUser.Name,
 			Gender: newUser.Gender,
 			Mobile: newUser.Mobile,
