@@ -29,7 +29,7 @@ RUN curl -L -o /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/relea
 
 # 安装 protoc-gen-go
 USER root
-RUN go get -u github.com/golang/protobuf/protoc-gen-go@v1.4.0
+RUN go install github.com/golang/protobuf/protoc-gen-go@v1.4.0
 
 # $GOPATH/bin添加到环境变量中
 ENV PATH $GOPATH/bin:$PATH
