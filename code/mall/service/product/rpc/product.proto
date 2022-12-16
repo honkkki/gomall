@@ -9,7 +9,7 @@ message CreateRequest {
   string Name = 1;
   string Desc = 2;
   int64 Stock = 3;
-  double Amount = 4;
+  int64 Amount = 4;
   int64 Status = 5;
 }
 message CreateResponse {
@@ -24,7 +24,7 @@ message UpdateRequest {
   string Name = 2;
   string Desc = 3;
   int64 Stock = 4;
-  double Amount = 5;
+  int64 Amount = 5;
   int64 Status = 6;
 }
 message UpdateResponse {
@@ -48,7 +48,7 @@ message DetailResponse {
   string Name = 2;
   string Desc = 3;
   int64 Stock = 4;
-  double Amount = 5;
+  int64 Amount = 5;
   int64 Status = 6;
 }
 // 产品详情
