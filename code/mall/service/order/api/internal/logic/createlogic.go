@@ -3,6 +3,8 @@ package logic
 import (
 	"context"
 
+	"github.com/honkkki/gomall/code/mall/service/order/rpc/types/order"
+
 	"github.com/honkkki/gomall/code/mall/service/order/api/internal/svc"
 	"github.com/honkkki/gomall/code/mall/service/order/api/internal/types"
 
@@ -24,7 +26,17 @@ func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogi
 }
 
 func (l *CreateLogic) Create(req *types.CreateRequest) (resp *types.CreateResponse, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.OrderRpcClient.Create(l.ctx, &order.CreateRequest{
+		Uid:    req.Uid,
+		Pid:    req.Pid,
+		Amount: req.Amount,
+		Status: req.Status,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.CreateResponse{
+		Id: res.Id,
+	}, nil
 }
