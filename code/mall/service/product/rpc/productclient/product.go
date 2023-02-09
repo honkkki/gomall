@@ -13,18 +13,21 @@ import (
 )
 
 type (
-	CreateRequest  = product.CreateRequest
-	CreateResponse = product.CreateResponse
-	DetailRequest  = product.DetailRequest
-	DetailResponse = product.DetailResponse
-	RemoveRequest  = product.RemoveRequest
-	RemoveResponse = product.RemoveResponse
-	UpdateRequest  = product.UpdateRequest
-	UpdateResponse = product.UpdateResponse
+	CreateRequest       = product.CreateRequest
+	CreateResponse      = product.CreateResponse
+	DetailRequest       = product.DetailRequest
+	DetailResponse      = product.DetailResponse
+	RemoveRequest       = product.RemoveRequest
+	RemoveResponse      = product.RemoveResponse
+	UpdateRequest       = product.UpdateRequest
+	UpdateResponse      = product.UpdateResponse
+	UpdateStockRequest  = product.UpdateStockRequest
+	UpdateStockResponse = product.UpdateStockResponse
 
 	Product interface {
 		Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
 		Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
+		UpdateStock(ctx context.Context, in *UpdateStockRequest, opts ...grpc.CallOption) (*UpdateStockResponse, error)
 		Remove(ctx context.Context, in *RemoveRequest, opts ...grpc.CallOption) (*RemoveResponse, error)
 		Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
 	}
@@ -48,6 +51,11 @@ func (m *defaultProduct) Create(ctx context.Context, in *CreateRequest, opts ...
 func (m *defaultProduct) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	client := product.NewProductClient(m.cli.Conn())
 	return client.Update(ctx, in, opts...)
+}
+
+func (m *defaultProduct) UpdateStock(ctx context.Context, in *UpdateStockRequest, opts ...grpc.CallOption) (*UpdateStockResponse, error) {
+	client := product.NewProductClient(m.cli.Conn())
+	return client.UpdateStock(ctx, in, opts...)
 }
 
 func (m *defaultProduct) Remove(ctx context.Context, in *RemoveRequest, opts ...grpc.CallOption) (*RemoveResponse, error) {

@@ -13,3 +13,5 @@ RedisCache:
     Type: node
     Pass:
 
+RedisConf:
+  Addr: redis:6379

@@ -13,4 +13,8 @@ type Config struct {
 	}
 
 	RedisCache cache.CacheConf
+
+	RedisConf struct {
+		Addr string
+	}
 }

@@ -5,7 +5,7 @@ Port: 8000
 Mysql:
   DataSource: root:123456@tcp(mysql:3306)/gomall?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 
-CacheRedis:
+RedisCache:
   - Host: redis:6379
     Pass:
     Type: node

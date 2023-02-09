@@ -32,6 +32,11 @@ func (s *ProductServer) Update(ctx context.Context, in *product.UpdateRequest) (
 	return l.Update(in)
 }
 
+func (s *ProductServer) UpdateStock(ctx context.Context, in *product.UpdateStockRequest) (*product.UpdateStockResponse, error) {
+	l := logic.NewUpdateStockLogic(ctx, s.svcCtx)
+	return l.UpdateStock(in)
+}
+
 func (s *ProductServer) Remove(ctx context.Context, in *product.RemoveRequest) (*product.RemoveResponse, error) {
 	l := logic.NewRemoveLogic(ctx, s.svcCtx)
 	return l.Remove(in)
