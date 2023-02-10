@@ -4,13 +4,10 @@ go 1.17
 
 require (
 	github.com/golang-jwt/jwt v3.2.1+incompatible
-	github.com/tal-tech/go-zero v1.2.5
 	github.com/zeromicro/go-zero v1.4.2
 	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
 	google.golang.org/grpc v1.50.1
 	google.golang.org/protobuf v1.28.1
-	gorm.io/driver/mysql v1.2.3
-	gorm.io/gorm v1.22.5
 )
 
 require (
@@ -24,10 +21,10 @@ require (
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-redis/redis v6.15.9+incompatible // indirect
 	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
+	github.com/golang-jwt/jwt/v4 v4.4.2 // indirect
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
@@ -35,10 +32,7 @@ require (
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/googleapis/gnostic v0.5.5 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.7.0 // indirect
-	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/justinas/alice v1.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.9 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182affec369 // indirect

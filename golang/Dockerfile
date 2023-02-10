@@ -19,7 +19,7 @@ RUN sed -i 's/deb.debian.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.lis
 
 # 安装 goctl
 USER root
-RUN GOPROXY=https://goproxy.cn/,direct go install github.com/tal-tech/go-zero/tools/goctl@latest
+RUN GOPROXY=https://goproxy.cn/,direct go install github.com/zeromicro/go-zero/tools/goctl@latest
 
 # 安装 protoc
 USER root
@@ -29,7 +29,7 @@ RUN curl -L -o /tmp/protoc.zip https://github.com/protocolbuffers/protobuf/relea
 
 # 安装 protoc-gen-go
 USER root
-RUN go get -u github.com/golang/protobuf/protoc-gen-go@v1.4.0
+RUN go install github.com/golang/protobuf/protoc-gen-go@v1.4.0
 
 # $GOPATH/bin添加到环境变量中
 ENV PATH $GOPATH/bin:$PATH
