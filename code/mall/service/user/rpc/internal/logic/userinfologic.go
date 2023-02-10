@@ -3,9 +3,10 @@ package logic
 import (
 	"context"
 	"github.com/honkkki/gomall/code/mall/service/user/model"
+	"google.golang.org/grpc/status"
+
 	"github.com/honkkki/gomall/code/mall/service/user/rpc/internal/svc"
 	"github.com/honkkki/gomall/code/mall/service/user/rpc/types/user"
-	"google.golang.org/grpc/status"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

@@ -2,6 +2,9 @@ package logic
 
 import (
 	"context"
+	"github.com/honkkki/gomall/code/mall/common/jwt"
+	"github.com/honkkki/gomall/code/mall/service/user/rpc/types/user"
+	"time"
 
 	"github.com/honkkki/gomall/code/mall/service/user/api/internal/svc"
 	"github.com/honkkki/gomall/code/mall/service/user/api/internal/types"
@@ -24,7 +27,22 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginRequest) (resp *types.LoginResponse, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.UserRpcClient.Login(l.ctx, &user.LoginRequest{
+		Mobile:   req.Mobile,
+		Password: req.Password,
+	})
 
-	return
+	if err != nil {
+		return nil, err
+	}
+
+	now := time.Now().Unix()
+	expire := now + l.svcCtx.Config.Auth.AccessExpire
+
+	token, err := jwt.GenerateToken(l.svcCtx.Config.Auth.AccessSecret, now, expire, res.Id)
+
+	return &types.LoginResponse{
+		AccessToken:  token,
+		AccessExpire: expire,
+	}, nil
 }
