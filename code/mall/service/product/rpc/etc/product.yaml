@@ -15,3 +15,9 @@ RedisCache:
 
 RedisConf:
   Addr: redis:6379
+
+
+Prometheus:
+  Host: 0.0.0.0
+  Port: 9091
+  Path: /metrics
