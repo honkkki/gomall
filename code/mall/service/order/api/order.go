@@ -8,6 +8,7 @@ import (
 	"github.com/honkkki/gomall/code/mall/service/order/api/internal/handler"
 	"github.com/honkkki/gomall/code/mall/service/order/api/internal/svc"
 
+	_ "github.com/dtm-labs/driver-gozero"
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
 )

@@ -15,6 +15,8 @@ import (
 type (
 	CreateRequest       = product.CreateRequest
 	CreateResponse      = product.CreateResponse
+	DecrStockRequest    = product.DecrStockRequest
+	DecrStockResponse   = product.DecrStockResponse
 	DetailRequest       = product.DetailRequest
 	DetailResponse      = product.DetailResponse
 	RemoveRequest       = product.RemoveRequest
@@ -30,6 +32,8 @@ type (
 		UpdateStock(ctx context.Context, in *UpdateStockRequest, opts ...grpc.CallOption) (*UpdateStockResponse, error)
 		Remove(ctx context.Context, in *RemoveRequest, opts ...grpc.CallOption) (*RemoveResponse, error)
 		Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
+		DecrStock(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error)
+		DecrStockRevert(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error)
 	}
 
 	defaultProduct struct {
@@ -66,4 +70,14 @@ func (m *defaultProduct) Remove(ctx context.Context, in *RemoveRequest, opts ...
 func (m *defaultProduct) Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error) {
 	client := product.NewProductClient(m.cli.Conn())
 	return client.Detail(ctx, in, opts...)
+}
+
+func (m *defaultProduct) DecrStock(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error) {
+	client := product.NewProductClient(m.cli.Conn())
+	return client.DecrStock(ctx, in, opts...)
+}
+
+func (m *defaultProduct) DecrStockRevert(ctx context.Context, in *DecrStockRequest, opts ...grpc.CallOption) (*DecrStockResponse, error) {
+	client := product.NewProductClient(m.cli.Conn())
+	return client.DecrStockRevert(ctx, in, opts...)
 }
