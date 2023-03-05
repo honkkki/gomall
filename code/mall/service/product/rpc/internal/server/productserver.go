@@ -32,11 +32,6 @@ func (s *ProductServer) Update(ctx context.Context, in *product.UpdateRequest) (
 	return l.Update(in)
 }
 
-func (s *ProductServer) UpdateStock(ctx context.Context, in *product.UpdateStockRequest) (*product.UpdateStockResponse, error) {
-	l := logic.NewUpdateStockLogic(ctx, s.svcCtx)
-	return l.UpdateStock(in)
-}
-
 func (s *ProductServer) Remove(ctx context.Context, in *product.RemoveRequest) (*product.RemoveResponse, error) {
 	l := logic.NewRemoveLogic(ctx, s.svcCtx)
 	return l.Remove(in)
@@ -45,4 +40,14 @@ func (s *ProductServer) Remove(ctx context.Context, in *product.RemoveRequest) (
 func (s *ProductServer) Detail(ctx context.Context, in *product.DetailRequest) (*product.DetailResponse, error) {
 	l := logic.NewDetailLogic(ctx, s.svcCtx)
 	return l.Detail(in)
+}
+
+func (s *ProductServer) DecrStock(ctx context.Context, in *product.DecrStockRequest) (*product.DecrStockResponse, error) {
+	l := logic.NewDecrStockLogic(ctx, s.svcCtx)
+	return l.DecrStock(in)
+}
+
+func (s *ProductServer) DecrStockRevert(ctx context.Context, in *product.DecrStockRequest) (*product.DecrStockResponse, error) {
+	l := logic.NewDecrStockRevertLogic(ctx, s.svcCtx)
+	return l.DecrStockRevert(in)
 }
