@@ -31,7 +31,9 @@ func (l *CreateLogic) Create(req *types.CreateRequest) (resp *types.CreateRespon
 		Oid:    req.Oid,
 		Amount: req.Amount,
 	})
+
 	if err != nil {
+		l.Logger.Error(err)
 		return nil, err
 	}
 
