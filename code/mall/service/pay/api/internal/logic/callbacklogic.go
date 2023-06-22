@@ -35,6 +35,7 @@ func (l *CallbackLogic) Callback(req *types.CallbackRequest) (resp *types.Callba
 		Status: req.Status,
 	})
 	if err != nil {
+		l.Logger.Error(err)
 		return nil, err
 	}
 

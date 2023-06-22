@@ -2,7 +2,6 @@ Name: Pay
 Host: 0.0.0.0
 Port: 8003
 
-
 Auth:
   AccessSecret: uOvKLmVfztaXGpNYd4Z0I1SiT7MweJhl
   AccessExpire: 86400
