@@ -30,6 +30,7 @@ func (l *DetailLogic) Detail(req *types.DetailRequest) (resp *types.DetailRespon
 		Id: req.Id,
 	})
 	if err != nil {
+		l.Logger.Error(err)
 		return nil, err
 	}
 
