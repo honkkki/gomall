@@ -43,6 +43,7 @@ func (l *RegisterLogic) Register(in *user.RegisterRequest) (*user.RegisterRespon
 
 		res, err := l.svcCtx.UserModel.Insert(l.ctx, &newUser)
 		if err != nil {
+			l.Logger.Errorw("db error", logx.Field("error", err))
 			return nil, status.Error(500, err.Error())
 		}
 
